@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.lovecoding.bean.Product" %>
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -41,7 +42,8 @@ body {
 			</ol>
 		</div>
 
-		<%
+		<%--
+			纯JSP代码循环遍历列表数据
 			List<Product> productList = (List<Product>)request.getAttribute("productList");
 			for(Product p : productList){
 			    out.print("<div class=\"col-md-2\" style='height:260px;'> ");
@@ -56,7 +58,21 @@ body {
 				out.print("</p>");
 				out.print("</div>");
 			}
-		%>
+		--%>
+		<c:forEach items="${productList}" var="p">
+			<div class="col-md-2" style="height: 260px;">
+				<a href="product_info.htm"> <img src="${p.pimage}"
+												 width="170" height="170" style="display: inline-block;">
+				</a>
+				<p>
+					<a href="product_info.html" style='color: green'>${p.pname}</a>
+				</p>
+				<p>
+					<font color="#FF0000">商城价：&yen;${p.shopPrice}</font>
+				</p>
+			</div>
+
+		</c:forEach>
 
 
 	</div>
