@@ -4,6 +4,7 @@ import com.lovecoding.bean.Product;
 import com.lovecoding.service.ProductService;
 import com.lovecoding.service.impl.ProductServiceImpl;
 import com.lovecoding.util.C3p0Pool;
+import com.lovecoding.vo.PageVo;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
@@ -26,8 +27,14 @@ public class ProductListServlet extends HttpServlet {
 
         productService = new ProductServiceImpl();
 
-        List<Product> productList = productService.getProductList();
-        req.setAttribute("productList" , productList);
+        req.setCharacterEncoding("utf-8");
+
+        String currentPage = req.getParameter("currentPage") == null ? "1" : req.getParameter("currentPage");
+        Integer maxCount = 12;
+        //返给前端的不仅仅是数据了 ； 当前页号、总页数
+        PageVo pageVo = productService.getPageVoByCurrentPageAndMaxCount(currentPage , maxCount);
+        //List<Product> productList = productService.getProductList();
+        req.setAttribute("pageVo" , pageVo);
         req.getRequestDispatcher("/product_list.jsp").forward(req , resp);
 
     }

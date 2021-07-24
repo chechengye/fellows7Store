@@ -3,6 +3,7 @@ package com.lovecoding.service.impl;
 import com.lovecoding.bean.Product;
 import com.lovecoding.dao.ProductDao;
 import com.lovecoding.service.ProductService;
+import com.lovecoding.vo.PageVo;
 
 import java.util.List;
 
@@ -35,5 +36,23 @@ public class ProductServiceImpl implements ProductService {
     public Product getProductDetailByPid(String pid) {
 
         return productDao.getProductDetailByPid(pid);
+    }
+
+    /**
+     * 根据页号与页数量查询封装PageVo对象
+     * @param currentPage
+     * @param maxCount
+     * @return
+     */
+    @Override
+    public PageVo getPageVoByCurrentPageAndMaxCount(String currentPage, Integer maxCount) {
+        PageVo pageVo = new PageVo();
+        pageVo.setCurrentPage(Integer.valueOf(currentPage));
+        List<Product> productList = productDao.getProductListByCurrentPageAndMaxCount(currentPage, maxCount);
+        pageVo.setProductList(productList);
+        //总页数 = 总数据条数 / maxCount  Math.ceil() 向上取整 天花板;
+        Integer totalCount = productDao.getProductCount();
+        pageVo.setTotalPages((int) Math.ceil(totalCount * 1.0 / maxCount));
+        return pageVo;
     }
 }
