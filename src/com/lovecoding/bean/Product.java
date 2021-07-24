@@ -14,6 +14,8 @@ public class Product implements Serializable {
 
     private String pimage;
 
+    private String pdesc;
+
     public String getPid() {
         return pid;
     }
@@ -52,6 +54,14 @@ public class Product implements Serializable {
 
     public void setPimage(String pimage) {
         this.pimage = pimage;
+    }
+
+    public String getPdesc() {
+        return pdesc;
+    }
+
+    public void setPdesc(String pdesc) {
+        this.pdesc = pdesc;
     }
 
     @Override

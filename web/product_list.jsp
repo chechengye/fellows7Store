@@ -61,11 +61,11 @@ body {
 		--%>
 		<c:forEach items="${productList}" var="p">
 			<div class="col-md-2" style="height: 260px;">
-				<a href="product_info.htm"> <img src="${p.pimage}"
+				<a href="${pageContext.request.contextPath}/productDetail?pid=${p.pid}"> <img src="${p.pimage}"
 												 width="170" height="170" style="display: inline-block;">
 				</a>
 				<p>
-					<a href="product_info.html" style='color: green'>${p.pname}</a>
+					<a href="${pageContext.request.contextPath}/productDetail?pid=${p.pid}" style='color: green'>${p.pname}</a>
 				</p>
 				<p>
 					<font color="#FF0000">商城价：&yen;${p.shopPrice}</font>

@@ -25,4 +25,15 @@ public class ProductServiceImpl implements ProductService {
 
         return productDao.getProductList();
     }
+
+    /**
+     * 根据商品主键获取商品详情信息
+     * @param pid
+     * @return
+     */
+    @Override
+    public Product getProductDetailByPid(String pid) {
+
+        return productDao.getProductDetailByPid(pid);
+    }
 }
