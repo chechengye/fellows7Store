@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" pageEncoding="UTF-8"%>
 <HTML>
 <HEAD>
@@ -7,17 +8,38 @@
 	rel="stylesheet" type="text/css" />
 <script language="javascript"
 	src="${pageContext.request.contextPath}/js/public.js"></script>
+	<script src="../../js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript">
 			function addProduct(){
 				window.location.href = "${pageContext.request.contextPath}/admin/product/add.jsp";
 			}
+			//当文档流中的内容，都准备完毕了，再调用
+			$(document).ready(function () {
+				$("#cid option[value = ${condition.cid}]").prop("selected" , true);
+                $("#is_hot option[value = ${condition.isHot}]").prop("selected" , true);
+            });
 		</script>
 </HEAD>
 <body>
 	<br>
 	<form id="Form1" name="Form1"
-		action="${pageContext.request.contextPath}/user/list.jsp"
+		action="${pageContext.request.contextPath}/adminProductList"
 		method="post">
+		商品名称: <input type="text" placeholder="请输入商品名称" name="pname" value="${condition.pname}"/>&nbsp;&nbsp;&nbsp;
+		商品分类:
+		<select name="cid" id="cid">
+			<option value="">不限</option>
+			<c:forEach items="${categoryList}" var="cate">
+				<option value="${cate.cid}">${cate.cname}</option>
+			</c:forEach>
+		</select>&nbsp;&nbsp;&nbsp;
+		是否热门:
+		<select name="isHot" id="is_hot">
+			<option value="">不限</option>
+			<option value="1">是</option>
+			<option value="0">否</option>
+		</select>&nbsp;&nbsp;&nbsp;
+		<input type="submit" value="搜索"/>
 		<table cellSpacing="1" cellPadding="0" width="100%" align="center"
 			bgColor="#f5fafe" border="0">
 			<TBODY>
@@ -49,30 +71,35 @@
 								<td width="7%" align="center">编辑</td>
 								<td width="7%" align="center">删除</td>
 							</tr>
-							<tr onmouseover="this.style.backgroundColor = 'white'"
-								onmouseout="this.style.backgroundColor = '#F5FAFE';">
-								<td style="CURSOR: hand; HEIGHT: 22px" align="center"
-									width="18%">1</td>
-								<td style="CURSOR: hand; HEIGHT: 22px" align="center"
-									width="17%"><img width="40" height="45" src=""></td>
-								<td style="CURSOR: hand; HEIGHT: 22px" align="center"
-									width="17%">电视机</td>
-								<td style="CURSOR: hand; HEIGHT: 22px" align="center"
-									width="17%">3000</td>
-								<td style="CURSOR: hand; HEIGHT: 22px" align="center"
-									width="17%">是</td>
-								<td align="center" style="HEIGHT: 22px"><a
-									href="${ pageContext.request.contextPath }/admin/product/edit.jsp">
+							<c:forEach items="${productList}" var="product" varStatus="vs">
+								<tr onmouseover="this.style.backgroundColor = 'white'"
+									onmouseout="this.style.backgroundColor = '#F5FAFE';">
+									<td style="CURSOR: hand; HEIGHT: 22px" align="center"
+										width="18%">${vs.count}</td>
+									<td style="CURSOR: hand; HEIGHT: 22px" align="center"
+										width="17%"><img width="40" height="45" src="${product.pimage}"></td>
+									<td style="CURSOR: hand; HEIGHT: 22px" align="center"
+										width="17%">${product.pname}</td>
+									<td style="CURSOR: hand; HEIGHT: 22px" align="center"
+										width="17%">${product.shopPrice}</td>
+									<td style="CURSOR: hand; HEIGHT: 22px" align="center"
+										width="17%"><c:if test="${product.isHot == 1}">是</c:if>
+										<c:if test="${product.isHot == 0}">否</c:if>
+									</td>
+									<td align="center" style="HEIGHT: 22px"><a
+											href="${ pageContext.request.contextPath }/admin/product/edit.jsp">
 										<img
-										src="${pageContext.request.contextPath}/images/i_edit.gif"
-										border="0" style="CURSOR: hand">
-								</a></td>
+												src="${pageContext.request.contextPath}/images/i_edit.gif"
+												border="0" style="CURSOR: hand">
+									</a></td>
 
-								<td align="center" style="HEIGHT: 22px"><a href="#"> <img
-										src="${pageContext.request.contextPath}/images/i_del.gif"
-										width="16" height="16" border="0" style="CURSOR: hand">
-								</a></td>
-							</tr>
+									<td align="center" style="HEIGHT: 22px"><a href="#"> <img
+											src="${pageContext.request.contextPath}/images/i_del.gif"
+											width="16" height="16" border="0" style="CURSOR: hand">
+									</a></td>
+								</tr>
+							</c:forEach>
+
 						</table>
 					</td>
 				</tr>
