@@ -4,6 +4,7 @@ import com.lovecoding.admin.bean.Product;
 import com.lovecoding.admin.vo.Condition;
 import com.lovecoding.web.util.C3p0Pool;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import java.sql.SQLException;
@@ -48,5 +49,35 @@ public class ProductDao {
             e.printStackTrace();
         }
         return Collections.EMPTY_LIST;
+    }
+
+    public Product getProductDetailByPid(String pid) {
+        try {
+            String sql = "select p.pid , p.pimage " +
+                    ",p.market_price marketPrice,  p.pname " +
+                    ", p.shop_price as shopPrice , p.pdesc , p.is_hot isHot , p.cid from product p where p.pid = ? ";
+            Product product = qr.query(sql , new BeanHandler<>(Product.class) , pid);
+            return product;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public int updateProductByPid(Product product) {
+        String sql = "update product set pname = ? , shop_price = ? " +
+                ", market_price = ?  " +
+                ", is_hot = ? , cid = ? , pdesc = ? where pid = ?";
+        try {
+
+            System.out.println("sql = " + sql);
+            return qr.update(sql , product.getPname()
+                    , product.getShopPrice()
+                    , product.getMarketPrice()
+                    , product.getIsHot() , product.getCid() , product.getPdesc() , product.getPid());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

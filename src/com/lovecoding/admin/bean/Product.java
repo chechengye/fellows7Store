@@ -18,6 +18,8 @@ public class Product implements Serializable {
 
     private Integer isHot;
 
+    private String cid;
+
     public String getPid() {
         return pid;
     }
@@ -74,6 +76,14 @@ public class Product implements Serializable {
         this.isHot = isHot;
     }
 
+    public String getCid() {
+        return cid;
+    }
+
+    public void setCid(String cid) {
+        this.cid = cid;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -82,6 +92,9 @@ public class Product implements Serializable {
                 ", marketPrice='" + marketPrice + '\'' +
                 ", shopPrice='" + shopPrice + '\'' +
                 ", pimage='" + pimage + '\'' +
+                ", pdesc='" + pdesc + '\'' +
+                ", isHot=" + isHot +
+                ", cid='" + cid + '\'' +
                 '}';
     }
 }

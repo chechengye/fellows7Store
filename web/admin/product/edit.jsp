@@ -1,15 +1,26 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" pageEncoding="UTF-8"%>
 <HTML>
 	<HEAD>
 		<meta http-equiv="Content-Language" content="zh-cn">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<LINK href="${pageContext.request.contextPath}/css/Style1.css" type="text/css" rel="stylesheet">
+
+		<script src="../../js/jquery-1.11.3.min.js"></script>
+		<script>
+            //当文档流中的内容，都准备完毕了，再调用
+            $(document).ready(function () {
+                $("#cid option[value = ${product.cid}]").prop("selected" , true);
+                $("#is_hot option[value = ${product.isHot}]").prop("selected" , true);
+            });
+		</script>
 	</HEAD>
 	
 	<body>
-		<!--  -->
-		<form id="userAction_save_do" name="Form1" action="${pageContext.request.contextPath}/adminProduct_update.action" method="post" enctype="multipart/form-data">
-			
+		<!--  enctype="multipart/form-data" 若表单中存在文件的内容，需要添加，否则需要去掉-->
+		<form id="userAction_save_do" name="Form1" action="${pageContext.request.contextPath}/adminProductUpdate" method="post" >
+			<!--隐藏输入域框-->
+			<input type="hidden" name="pid" value="${product.pid}"/>
 			<table cellSpacing="1" cellPadding="5" width="100%" align="center" bgColor="#eeeeee" style="border: 1px solid #8ba7e3" border="0">
 				<tr>
 					<td class="ta_01" align="center" bgColor="#afd1f3" colSpan="4"
@@ -24,14 +35,15 @@
 						商品名称：
 					</td>
 					<td class="ta_01" bgColor="#ffffff">
-						<input type="text" name="pname" value="" id="userAction_save_do_logonName" class="bg"/>
+						<input type="text" name="pname" value="${product.pname}"  class="bg"/>
+
 					</td>
 					<td width="18%" align="center" bgColor="#f5fafe" class="ta_01">
 						是否热门：
 					</td>
 					<td class="ta_01" bgColor="#ffffff">
 						
-						<select name="is_hot">
+						<select name="isHot" id="is_hot">
 							<option value="1">是</option>
 							<option value="0">否</option>
 						</select>
@@ -42,13 +54,13 @@
 						市场价格：
 					</td>
 					<td class="ta_01" bgColor="#ffffff">
-						<input type="text" name="market_price" value="" id="userAction_save_do_logonName" class="bg"/>
+						<input type="text" name="marketPrice" value="${product.marketPrice}" class="bg"/>
 					</td>
 					<td width="18%" align="center" bgColor="#f5fafe" class="ta_01">
 						商城价格：
 					</td>
 					<td class="ta_01" bgColor="#ffffff">
-						<input type="text" name="shop_price" value="" id="userAction_save_do_logonName" class="bg"/>
+						<input type="text" name="shopPrice" value="${product.shopPrice}" id="userAction_save_do_logonName" class="bg"/>
 					</td>
 				</tr>
 				
@@ -57,10 +69,11 @@
 						所属分类：
 					</td>
 					<td class="ta_01" bgColor="#ffffff" colspan="3">
-						<select name="categorySecond.csid">
-							<option value="">大型电器</option>
-							<option value="">手机数码</option>
-							<option value="">衣帽箱包</option>
+
+						<select name="cid" id="cid">
+							<c:forEach items="${categoryList}" var="cate">
+								<option value="${cate.cid}">${cate.cname}</option>
+							</c:forEach>
 						</select>
 					</td>
 				</tr>
@@ -69,7 +82,7 @@
 						商品描述：
 					</td>
 					<td class="ta_01" bgColor="#ffffff" colspan="3">
-						<textarea name="pdesc" rows="5" cols="30"></textarea>
+						<textarea name="pdesc" rows="5" cols="30">${product.pdesc}</textarea>
 					</td>
 				</tr>
 				<tr>

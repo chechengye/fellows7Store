@@ -8,4 +8,8 @@ import java.util.Map;
 
 public interface ProductService {
     List<Product> getProductListByCondition(Condition condition);
+
+    Product getProductDetailByPid(String pid);
+
+    int updateProductByPid(Map<String, String[]> parameterMap);
 }
