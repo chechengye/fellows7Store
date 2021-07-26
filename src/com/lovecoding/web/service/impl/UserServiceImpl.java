@@ -35,4 +35,14 @@ public class UserServiceImpl implements UserService {
         }
         return 0;
     }
+
+    /**
+     * 校验用户名
+     * @param username
+     * @return
+     */
+    @Override
+    public int checkUserIsExit(String username) {
+        return userDao.checkUserIsExit(username);
+    }
 }

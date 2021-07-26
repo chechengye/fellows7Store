@@ -3,6 +3,7 @@ package com.lovecoding.web.dao;
 import com.lovecoding.web.bean.User;
 import com.lovecoding.web.util.C3p0Pool;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.SQLException;
 
@@ -28,6 +29,16 @@ public class UserDao {
                     0 ,
                     user.getCode());
             return rows;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int checkUserIsExit(String username) {
+        try {
+            Long l = (Long)qr.query("select count(*) from user u where u.username = ?" , new ScalarHandler() , username);
+            return l.intValue();
         } catch (SQLException e) {
             e.printStackTrace();
         }

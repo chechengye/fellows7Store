@@ -11,6 +11,22 @@
 <!-- 引入自定义css文件 style.css -->
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 
+<script>
+	function checkUserName(obj) {
+
+		$.ajax({
+			url: "${pageContext.request.contextPath}/checkUserInfo" ,
+			data: {"username":obj.value} ,
+			success: function (data) {
+				$("#username_tips").html(data);//data ： 服务端传递回来的提示信息
+            },
+			dataType: "text"
+		});
+    }
+
+
+</script>
+
 <style>
 body {
 	margin-top: 20px;
@@ -47,8 +63,9 @@ font {
 						<label for="username" class="col-sm-2 control-label">用户名</label>
 						<div class="col-sm-6">
 							<input type="text" class="form-control" id="username"
-								placeholder="请输入用户名" name="username">
+								placeholder="请输入用户名" name="username"  onblur="checkUserName(this)">
 						</div>
+						<div id="username_tips" style="color: red"></div>
 					</div>
 					<div class="form-group">
 						<label for="inputPassword3" class="col-sm-2 control-label">密码</label>
