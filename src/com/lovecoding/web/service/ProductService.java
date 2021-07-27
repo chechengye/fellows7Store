@@ -11,4 +11,6 @@ public interface ProductService {
     Product getProductDetailByPid(String pid);
 
     PageVo getPageVoByCurrentPageAndMaxCount(String currentPage, Integer maxCount);
+
+    List<Product> searchProductByWord(String word);
 }

@@ -12,4 +12,5 @@ public interface ProductService {
     Product getProductDetailByPid(String pid);
 
     int updateProductByPid(Map<String, String[]> parameterMap);
+
 }

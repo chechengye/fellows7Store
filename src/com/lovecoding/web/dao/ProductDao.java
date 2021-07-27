@@ -62,4 +62,13 @@ public class ProductDao {
         }
         return 0;
     }
+
+    public List<Product> searchProductByWord(String word) {
+        try {
+            return qr.query("select p.pid, p.pname from product p where p.pname like ? LIMIT 0 , 8" , new BeanListHandler<>(Product.class) , "%" +word+ "%");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Collections.EMPTY_LIST;
+    }
 }

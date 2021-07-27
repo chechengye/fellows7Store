@@ -55,4 +55,15 @@ public class ProductServiceImpl implements ProductService {
         pageVo.setTotalPages((int) Math.ceil(totalCount * 1.0 / maxCount));
         return pageVo;
     }
+
+    /**
+     * 根据前端传递的字符匹配商品列表信息
+     * @param word
+     * @return
+     */
+    @Override
+    public List<Product> searchProductByWord(String word) {
+
+        return productDao.searchProductByWord(word);
+    }
 }
