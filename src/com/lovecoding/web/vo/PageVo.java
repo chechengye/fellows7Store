@@ -12,6 +12,7 @@ public class PageVo {
 
     private Integer totalPages;
 
+
     public List<Product> getProductList() {
         return productList;
     }

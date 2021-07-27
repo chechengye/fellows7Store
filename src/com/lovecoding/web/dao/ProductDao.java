@@ -8,6 +8,7 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,9 +43,19 @@ public class ProductDao {
         return null;
     }
 
-    public List<Product> getProductListByCurrentPageAndMaxCount(String currentPage, Integer maxCount) {
+    public List<Product> getProductListByCurrentPageAndMaxCount(String currentPage, Integer maxCount , String cid) {
         try {
-            List<Product> productList = qr.query("select p.pid , p.pimage , p.pname , p.shop_price as shopPrice from product p LIMIT ? ,?" , new BeanListHandler<>(Product.class) , (Integer.valueOf(currentPage) - 1) * maxCount , maxCount);
+            String sql = "select p.pid , p.pimage , p.pname , p.shop_price as shopPrice from product p where 1=1 ";//  LIMIT ? ,?
+            List<Object> list = new ArrayList<>();
+            if(null != cid && !cid.equals("")){
+                sql += "and p.cid = ? ";
+                list.add(cid);
+            }
+            sql += "LIMIT ? ,? ";
+            list.add((Integer.valueOf(currentPage) - 1) * maxCount);
+            list.add(maxCount);
+            List<Product> productList = qr.query(sql , new BeanListHandler<>(Product.class) , list.toArray());
+
             return productList;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,10 +63,16 @@ public class ProductDao {
         return Collections.emptyList();
     }
 
-    public Integer getProductCount() {
+    public Integer getProductCount(String cid) {
 
         try {
-            Long l = (Long)qr.query("select count(*) from product" , new ScalarHandler());
+            String sql = "select count(*) from product p where 1=1 ";
+            List<Object> list = new ArrayList<>();
+            if(null != cid && !cid.equals("")){
+                sql+= " and p.cid = ? ";
+                list.add(cid);
+            }
+            Long l = (Long)qr.query(sql , new ScalarHandler() , list.toArray());
             return l.intValue();
         } catch (SQLException e) {
             e.printStackTrace();

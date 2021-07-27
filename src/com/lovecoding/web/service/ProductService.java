@@ -10,7 +10,7 @@ public interface ProductService {
 
     Product getProductDetailByPid(String pid);
 
-    PageVo getPageVoByCurrentPageAndMaxCount(String currentPage, Integer maxCount);
+    PageVo getPageVoByCurrentPageAndMaxCount(String currentPage, Integer maxCount , String cid);
 
     List<Product> searchProductByWord(String word);
 }

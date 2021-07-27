@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -28,9 +29,17 @@
             $("#content").css("display","none");
         }
     }
+    /*$(document).ready(function () {
+        $("#cate_ul li").removeClass("active");
+        $("#cate_ul li").click(function () {
+            alert(111)
+			$("#cate_ul li").addClass("active");
+        });
+    });*/
     function checked(obj) {
 		$(obj).css("background","#2aabd2");
     }
+
     function noChecked(obj) {
         $(obj).css("background","#ffffff");
     }
@@ -65,15 +74,14 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">首页</a>
+				<a class="navbar-brand" href="index.jsp">首页</a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="<%=request.getContextPath()%>/productList">手机数码<span class="sr-only">(current)</span></a></li>
-					<li><a href="#">电脑办公</a></li>
-					<li><a href="#">电脑办公</a></li>
-					<li><a href="#">电脑办公</a></li>
+				<ul class="nav navbar-nav" id="cate_ul">
+					<c:forEach items="${categoryList}" var="cate">
+						<li><a href="<%=request.getContextPath()%>/productList?cid=${cate.cid}">${cate.cname}<span class="sr-only">(current)</span></a></li>
+					</c:forEach>
 				</ul>
 				<form class="navbar-form navbar-right" role="search">
 					<div class="form-group" style="position: relative">
