@@ -3,6 +3,7 @@ package com.lovecoding.web.dao;
 import com.lovecoding.web.bean.User;
 import com.lovecoding.web.util.C3p0Pool;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.SQLException;
@@ -43,5 +44,14 @@ public class UserDao {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public User login(String username, String password) {
+        try {
+            return qr.query("select u.name , u.uid from user u where username = ? and password = ? " , new BeanHandler<>(User.class) , username , password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

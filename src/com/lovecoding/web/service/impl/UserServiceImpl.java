@@ -45,4 +45,9 @@ public class UserServiceImpl implements UserService {
     public int checkUserIsExit(String username) {
         return userDao.checkUserIsExit(username);
     }
+
+    @Override
+    public User login(String username, String password) {
+        return userDao.login(username , password);
+    }
 }

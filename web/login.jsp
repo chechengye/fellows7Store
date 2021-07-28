@@ -54,19 +54,20 @@ font {
 					style="width: 440px; border: 1px solid #E7E7E7; padding: 20px 0 20px 30px; border-radius: 5px; margin-top: 60px; background: #fff;">
 					<font>会员登录</font>USER LOGIN
 					<div>&nbsp;</div>
-					<form class="form-horizontal">
+					<form class="form-horizontal" action="${pageContext.request.contextPath}/login">
 						<div class="form-group">
 							<label for="username" class="col-sm-2 control-label">用户名</label>
 							<div class="col-sm-6">
 								<input type="text" class="form-control" id="username"
-									placeholder="请输入用户名">
+									placeholder="请输入用户名" name="username">
 							</div>
+							<div style="color: red">${errMsg}</div>
 						</div>
 						<div class="form-group">
 							<label for="inputPassword3" class="col-sm-2 control-label">密码</label>
 							<div class="col-sm-6">
 								<input type="password" class="form-control" id="inputPassword3"
-									placeholder="请输入密码">
+									placeholder="请输入密码" name="password">
 							</div>
 						</div>
 						<div class="form-group">

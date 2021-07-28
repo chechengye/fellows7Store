@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,6 +9,13 @@
 		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
 		<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
 		<script src="js/bootstrap.min.js" type="text/javascript"></script>
+		<script>
+
+			function js_fn(obj) {
+				$("#real_price").html($("#shop_price").html() * $(obj).val());
+
+            }
+		</script>
 		<!-- 引入自定义css文件 style.css -->
 		<link rel="stylesheet" href="css/style.css" type="text/css" />
 		<style>
@@ -49,27 +57,30 @@
 								<th>小计</th>
 								<th>操作</th>
 							</tr>
-							<tr class="active">
-								<td width="60" width="40%">
-									<input type="hidden" name="id" value="22">
-									<img src="./image/dadonggua.jpg" width="70" height="60">
-								</td>
-								<td width="30%">
-									<a target="_blank"> 有机蔬菜      大冬瓜...</a>
-								</td>
-								<td width="20%">
-									￥298.00
-								</td>
-								<td width="10%">
-									<input type="text" name="quantity" value="1" maxlength="4" size="10">
-								</td>
-								<td width="15%">
-									<span class="subtotal">￥596.00</span>
-								</td>
-								<td>
-									<a href="javascript:;" class="delete">删除</a>
-								</td>
-							</tr>
+							<c:forEach items="${cartAndProductList}" var="cp">
+								<tr class="active">
+									<td width="60" width="40%">
+										<input type="hidden" name="id" value="22">
+										<img src="${cp.pimage}" width="70" height="60">
+									</td>
+									<td width="30%">
+										<a target="_blank">${cp.pname}</a>
+									</td>
+									<td width="20%">
+										￥<span id="shop_price">${cp.shopPrice}</span>
+									</td>
+									<td width="10%">
+										<input onkeyup="js_fn(this)" type="text" id="quantity" name="quantity" value="${cp.count}" maxlength="4" size="10">
+									</td>
+									<td width="15%">
+										￥<span id="real_price" class="subtotal">${cp.shopPrice * cp.count}</span>
+									</td>
+									<td>
+										<a href="javascript:;" class="delete">删除</a>
+									</td>
+								</tr>
+							</c:forEach>
+
 						</tbody>
 					</table>
 				</div>
